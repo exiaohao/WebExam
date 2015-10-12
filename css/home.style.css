@@ -1,0 +1,227 @@
+@media screen and (max-width: 800px) {
+	body{
+		width: 100% !important;
+	}
+	.header-school-navigator{
+		display: none
+	}
+	.header{
+		border-top: 4px solid #9E2435;
+		width: 100%;
+	}
+	.header .logo{
+		width: 100%;
+		margin: 0 auto;
+		text-align: center;
+	}
+	
+	/*navi*/
+	.header .navi{
+		display: none;
+		background: #fff;
+		border-left: 1px solid #ccc;
+		position:absolute;
+		top:0;
+		right: 0;
+		bottom: 0;
+		height: 100%;
+		width: 200px;
+		z-index: 999999
+	}
+	.header .navi ul{
+		margin: 0;
+		padding: 0
+	}
+	.header .navi ul li{
+		list-style: none;
+		padding: 8px;
+		border-bottom: 1px solid #ddd
+	}
+	.header .navi ul li a{
+		color: #666;
+		font-size: 13px;
+		text-decoration: none
+	}
+	.header .navi .navi-header{
+		padding: 10px;
+		font-size: 15px;
+		font-weight: bold;
+		border-bottom: 1px solid #ccc
+	}
+	.navi-bg{
+		position: absolute;
+		display: block;
+		width: 100%;
+		height: 100%;
+		top: 0;
+		z-index: 9999;
+		background: #900;
+		text-indent: -99999em
+	}
+		.header .navbar-layer{
+			overflow: hidden;
+			background: #f5f5f5
+		}
+		.header button.navbar-toggle{
+			float: right;
+			background: #eee;
+			padding: 5px 10px 8px 10px;
+			border: 0
+		}
+		.header span.line{
+			margin: 3px 0 0 0;
+			height: 3px;
+			width: 20px;
+			display: block;
+			overflow: hidden;
+			text-indent: -9999em;
+			background: #bbb
+		}
+
+	.slider,.school-layer,.school-navigator,.news-nodes,.footer{
+		display: none
+	}
+}
+
+@media screen and (min-width: 800px) {
+	html,body{
+		width: 100%;
+		height: 100%;
+		padding: 0;
+		margin: 0;
+		font-size: 12px
+	}
+
+	body{
+		background: #f5f5f5
+	}
+
+	.wrapper{
+		width: 100%;
+		overflow: hidden
+	}
+	.container{
+		width: 980px;
+		margin: 0 auto;
+		overflow: hidden
+	}
+	.header{
+		background: #fff
+	}
+	.header .logo{
+		float: left;
+		width: 300px;
+	}
+	.header .navi{
+		float: right;
+		width: 625px;
+	}
+	.header .navi .navbar-layer,.navi-header,.navbar-toggle{
+		display: none
+	}
+	.header .navi ul{
+		margin: 0;
+		padding: 0
+	}
+	.header .navi li{
+		list-style: none;
+		display: inline-block;
+		width: 100px;
+		margin: 30px 0;
+		padding: 10px 0;
+		text-align: center;
+	}
+	.header .navi li a{
+		color: #000;
+		font-size: 15px;
+		padding: 10px 0;
+		border-bottom: 4px solid #fff;
+		text-decoration: none
+	}
+	.header .navi li a:hover{
+		border-bottom: 4px solid #9E2435;
+	}
+
+	.header-school-navigator{
+		width: 100%;
+		padding: 5px 0 7px 0;
+		overflow: hidden;
+		background: #ccc
+	}
+	.header-school-navigator a{
+		color: #666;
+		margin: 0 5px 0 0;
+		text-decoration: none;
+	}
+	.header-school-navigator a:hover{
+		color: #000
+	}
+
+	.slider{
+		width: 100%;
+		height: 350px;
+		background: #ddd;
+		margin: 0 auto;
+		overflow: hidden;
+	}
+	.slider #school-layer{
+		width: 980px;
+		margin: 0 auto
+	}
+
+	.school-navigator{
+		width: 100%;
+		overflow: hidden;
+		padding: 12px 0 2px 0;
+		margin: 0 auto;
+		background: url('/images/border_shadow2.jpg') repeat-x;
+	}
+		ul.school-list{
+			margin: 0;
+			padding: 0
+		}
+		ul.school-list li{
+			float: right;
+			list-style: none;
+			margin: 0 -3px 0 0;
+			display: inline-block
+		}
+		ul.school-list li a{
+			padding: 8px 10px;
+			font-size: 13px;
+			color: #9E2435;
+			text-decoration: none;
+		}
+		ul.school-list li a:hover{
+			color: #333
+		}
+
+
+	#school-layer{
+		overflow: hidden;
+	}
+		#school-layer .hidden-school-layer{
+			display: none;
+			width: 980px;
+			height: 350px;
+			background: #fff
+		}
+
+
+	.news-nodes{
+		width: 990px;
+		margin: 0 auto;
+		padding: 0 0 0 10px;
+		overflow: hidden
+	}
+	.news-nodes .news-node{
+		width: 325px;
+		height: 318px;
+		float: left;
+		display: inline-block;
+		margin: 10px 0;
+		border: 1px solid #ccc;
+		border-right: 1px solid #fff;
+		background: url("/images/newsnode-border.gif") repeat-y 0 0 #fff;
+	}
+}

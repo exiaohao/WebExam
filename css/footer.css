@@ -1,0 +1,39 @@
+.footer{
+	background: #444;
+	border-bottom: 4px solid #9E2435;	
+	padding: 20px 0;
+	margin: 50px 0 0 0;
+}
+
+.footer .logo{
+	width: 400px;
+	padding: 20px 0 0 0;
+	float: left;
+	overflow: hidden
+}
+.footer .links{
+	width: 200px;
+	float: left;
+	overflow: hidden;
+}
+.footer .links a{
+	display: block;
+	font-size: 14px;
+	color: #ddd;
+	text-decoration: none;
+	margin: 10px 0
+}
+.footer .links a:hover{
+	color: #fff
+}
+
+.footer .about{
+	width: 300px;
+	float: right;
+	overflow: hidden;
+}
+.footer .about p{
+	margin: 10px;
+	color: #ddd;
+	font-size: 14px;
+}

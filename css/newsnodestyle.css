@@ -1,0 +1,83 @@
+.news-node .node-header{
+	padding: 20px 0 0 20px;
+	overflow: hidden;
+	
+}
+.news-node .node-header span{
+	float: left;
+	width: 270px;
+	display: inline-block;
+	color: #666;
+}
+.news-node .node-header a{
+	display: inline-block;
+	float: right;
+	background: url(/images/arrow_more.gif) no-repeat 0 0;
+	position: absolute;
+	width: 14px;
+	height: 14px;
+	font-size: 10px;
+	text-indent: -9999px;
+}
+.news-node .node-header a:hover{
+	background: url(/images/arrow_more.gif) no-repeat 0 -14px;
+}
+.news-node .node-detail{
+	padding: 20px
+}
+.news-node .node-detail ul{
+	margin: 0;
+	padding: 0
+}
+.news-node .node-detail ul li{
+	display: block;
+}
+.news-node .node-detail ul li a{
+	display: inline-block;
+	width: 240px;
+	color: #333;
+	font-size: 14px;
+	text-decoration: none;
+	padding: 10px 15px 10px 30px;
+	margin: 1px 0;
+	background: url('/images/arrow_li.gif') no-repeat 10px 13px #eee
+}
+.news-node .node-detail ul li a:hover{
+	background: url('/images/arrow_li.gif') no-repeat 10px -88px #9E2435;
+	color: #fff;
+	-webkit-transition: all 0.25s;
+	-moz-transition: all 0.25s;
+	-o-transition: all 0.25s;
+	transition: all 0.25s;
+}
+
+
+.news-list{
+	margin: 0 0 -10px 0
+}
+.news-node .node-detail p.item{
+	padding: 5px 0 8px 0
+}
+.news-node .node-detail span.date{
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+	font-size: 14px;
+  	color: #999;
+  	display: block;
+}
+.news-node .node-detail span.title{
+	display: block;
+}
+.news-node .node-detail span.title a{
+	color: #9E2435;
+	font-size: 15px;
+	width: 280px;
+	text-decoration: none;
+	display:inline-block;
+	white-space:nowrap;
+	word-break:keep-all;
+	overflow:hidden;
+	text-overflow:ellipsis;
+}
+.news-node .node-detail span.title a:hover{
+	color: #000
+}
