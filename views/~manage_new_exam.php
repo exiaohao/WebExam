@@ -30,6 +30,22 @@
 	}
 	?>
 	<div class="form-group">
+        <label>考题类型</label><br />
+		<span>单选</span>
+		<input type="text" name="struct[singleselect]" class="form-control" style="width:180px;" placeholder="">
+		<span>多选</span>
+		<input type="text" name="struct[multiselect]" class="form-control" style="width:180px;" placeholder="">
+		<span>判断</span>
+		<input type="text" name="struct[yorn]" class="form-control" style="width:180px;" placeholder="">
+		<span>填空</span>
+		<input type="text" name="struct[blank]" class="form-control" style="width:180px;" placeholder="">
+    </div>
+	<div class="form-group">
+        <label>考试时间</label>
+		<span>分钟</span>
+		<input type="text" name="time" class="form-control" style="width:180px;" placeholder="分钟">
+    </div>
+	<div class="form-group">
 		<button type="submit" class="btn btn-primary">创 建 考 试</button>
 	</div>	
 </form>

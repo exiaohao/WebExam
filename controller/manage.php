@@ -41,7 +41,9 @@ class manage extends core
 	}
 	function creat_new_exam()
 	{
-		$sql = "INSERT INTO `exam`(`type`, `title`, `descr`, `time_start`, `time_expired`, `available_user`, `status`) VALUES ('exam', '{$_POST['title']}', '".nl2br($_POST['descr'])."', '".strtotime($_POST['time-start'])."', '".strtotime($_POST['time-expired'])."', '".json_encode($_POST['available_year'])."', 1);";
+		$testTime = ($_POST['time']+0)>0?($_POST['time']+0):die("考试时间需大于0分钟");
+		$struct = json_encode($_POST['struct']);
+		$sql = "INSERT INTO `exam`(`type`, `title`, `descr`, `time_start`, `time_expired`, `available_user`, `status`, `structure`, `time`) VALUES ('exam', '{$_POST['title']}', '".nl2br($_POST['descr'])."', '".strtotime($_POST['time-start'])."', '".strtotime($_POST['time-expired'])."', '".json_encode($_POST['available_year'])."', 1, '{$struct}', '{$testTime}');";
 		$act = $this->db->query($sql);
 		if($act)
 		{
