@@ -1,4 +1,7 @@
 <style>
+section{
+	margin: 10px 0
+}
 .input-group{
 	margin:0 0 3px 0
 }
@@ -19,41 +22,120 @@ else
 	die("考试不存在");
 }
 ?>
-<form>
-<div  class="form-group">
-	<label>题干</label>
-	<input type="text" class="form-control" placeholder="题干内容">
-</div>
 
-<div class="input-group">
-	<span class="input-group-addon" id="basic-addon2">选项A</span>
-  	<input type="text" name="sel-option[A]" class="form-control" placeholder="选项内容" aria-describedby="basic-addon2">
-  	<span class="input-group-addon" id="basic-addon2">
-		<input type="radio" name="correct[]" value="A">
-	</span>
-</div>
-<div class="input-group">
-    <span class="input-group-addon" id="basic-addon2">选项B</span>
-    <input type="text" name="sel-option[A]" class="form-control" placeholder="选项内容" aria-describedby="basic-addon2">
-    <span class="input-group-addon" id="basic-addon2">
-        <input type="radio" name="correct[]" value="B">
-    </span>
-</div>
-<div class="input-group">
-    <span class="input-group-addon" id="basic-addon2">选项C</span>
-    <input type="text" name="sel-option[A]" class="form-control" placeholder="选项内容" aria-describedby="basic-addon2">
-    <span class="input-group-addon" id="basic-addon2">
-        <input type="radio" name="correct[]" value="C">
-    </span>
-</div>
-<div class="input-group">
-    <span class="input-group-addon" id="basic-addon2">选项D</span>
-    <input type="text" name="sel-option[A]" class="form-control" placeholder="选项内容" aria-describedby="basic-addon2">
-    <span class="input-group-addon" id="basic-addon2">
-        <input type="radio" name="correct[]" value="D">
-    </span>
+<h2 class="sub-header">选择新增类型</h2>
+<div class="btn-group" role="group">
+	<button id="ss" type="button" class="btn btn-default selectquestion">单选题</button>
+	<button id="ms" type="button" class="btn btn-default selectquestion">多选题</button>
+	<button id="yn" type="button" class="btn btn-default selectquestion">判断题</button>
+	<button id="blank" type="button" class="btn btn-default selectquestion">填空题</button>
 </div>
 
 
 
-</form>
+<!--SingleSelect-->
+<section id="newQuestion-ss" class="question-section">
+	<form action="/manage/addQuestion/<?=$qid; ?>" method="post">
+		<input type="hidden" name="qtype" value="ss">
+		<div  class="form-group">
+			<label>题干</label><input type="text" name="question" class="form-control" placeholder="题干内容">
+		</div>
+		<div class="input-group">
+			<span class="input-group-addon" id="basic-addon2">选项A</span>
+		  	<input type="text" name="sel-option[A]" class="form-control" placeholder="选项内容" aria-describedby="basic-addon2">
+		  	<span class="input-group-addon" id="basic-addon2"><input type="radio" name="correct" value="A"></span>
+		</div>
+		<div class="input-group">
+			<span class="input-group-addon" id="basic-addon2">选项B</span>
+		    <input type="text" name="sel-option[B]" class="form-control" placeholder="选项内容" aria-describedby="basic-addon2">
+		    <span class="input-group-addon" id="basic-addon2"><input type="radio" name="correct" value="B"></span>
+		</div>
+		<div class="input-group">
+		    <span class="input-group-addon" id="basic-addon2">选项C</span>
+		    <input type="text" name="sel-option[C]" class="form-control" placeholder="选项内容" aria-describedby="basic-addon2">
+		    <span class="input-group-addon" id="basic-addon2"><input type="radio" name="correct" value="C"></span></div>
+		<div class="input-group">
+		    <span class="input-group-addon" id="basic-addon2">选项D</span>
+		    <input type="text" name="sel-option[D]" class="form-control" placeholder="选项内容" aria-describedby="basic-addon2">
+		    <span class="input-group-addon" id="basic-addon2"><input type="radio" name="correct" value="D"></span>
+		</div>
+		<p><button type="submit" class="btn btn-info">保存问题</button></p>
+	</form>
+</section>
+<!--MultiSelect-->
+<section id="newQuestion-ms" class="question-section">
+	<form action="/manage/addQuestion/<?=$qid; ?>" method="post">
+		<input type="hidden" name="qtype" value="ms">
+		<div class="form-group">
+		    <label>题干</label><input type="text" class="form-control" placeholder="题干内容">
+		</div>
+		<div class="input-group">
+		    <span class="input-group-addon" id="basic-addon2">选项A</span>
+		    <input type="text" name="sel-option[A]" class="form-control" placeholder="选项内容" aria-describedby="basic-addon2">
+		    <span class="input-group-addon" id="basic-addon2"><input type="checkbox" name="correct[]" value="A"></span>
+		</div>
+		<div class="input-group">
+		    <span class="input-group-addon" id="basic-addon2">选项B</span>
+	    	<input type="text" name="sel-option[A]" class="form-control" placeholder="选项内容" aria-describedby="basic-addon2">
+		    <span class="input-group-addon" id="basic-addon2"><input type="checkbox" name="correct[]" value="B"></span>
+		</div>
+		<div class="input-group">
+		    <span class="input-group-addon" id="basic-addon2">选项C</span>
+		    <input type="text" name="sel-option[A]" class="form-control" placeholder="选项内容" aria-describedby="basic-addon2">
+		    <span class="input-group-addon" id="basic-addon2"><input type="checkbox" name="correct[]" value="C"></span>
+		</div>
+		<div class="input-group">
+		    <span class="input-group-addon" id="basic-addon2">选项D</span>
+		    <input type="text" name="sel-option[A]" class="form-control" placeholder="选项内容" aria-describedby="basic-addon2">
+		    <span class="input-group-addon" id="basic-addon2"><input type="checkbox" name="correct[]" value="D"></span>
+		</div>
+		<p><button type="submit" class="btn btn-info">保存问题</button></p>
+	</form>
+</section>
+
+<!--YesOrNo-->
+<section id="newQuestion-yn" class="question-section">
+	<form action="/manage/addQuestion/<?=$qid; ?>" method="post">
+		<input type="hidden" name="qtype" value="yn">
+		<div  class="form-group"><label>题干</label><input type="text" class="form-control" placeholder="题干内容"></div>
+		<div class="input-group">
+		    <span class="input-group-addon" id="basic-addon2">对</span>
+		    <input type="text" name="sel-option[A]" class="form-control" placeholder="对" value="对" aria-describedby="basic-addon2">
+		    <span class="input-group-addon" id="basic-addon2"><input type="radio" name="correct[]" value="A"></span>
+		</div>
+		<div class="input-group">
+		    <span class="input-group-addon" id="basic-addon2">错</span>
+    		<input type="text" name="sel-option[A]" class="form-control" placeholder="错" value="错" aria-describedby="basic-addon2">
+		    <span class="input-group-addon" id="basic-addon2"><input type="radio" name="correct[]" value="B"></span>
+		</div>
+		<p><button type="submit" class="btn btn-info">保存问题</button></p>
+	</form>
+</section>
+<!--Blank-->
+<section id="newQuestion-blank" class="question-section">
+	<form action="/manage/addQuestion/<?=$qid; ?>" method="post">
+		<input type="hidden" name="qtype" value="blank">
+		<div  class="form-group"><label>题目</label>
+			<input type="text" class="form-control" placeholder="题目">
+			<span>填空处用<code>@@@</code>表示</span>
+		</div>
+		<div  class="form-group">
+		    <label>正确答案</label>
+		    <input type="text" class="form-control" placeholder="正确答案">
+		</div>
+		<p><button type="submit" class="btn btn-info">保存问题</button></p>
+	</form>
+</section>
+
+
+
+<script src="/js/jquery-1.10.2.min.js"></script>
+<script>
+$(function(){
+	$(".selectquestion").click(function(){
+		console.log($(this).attr("id"))
+		$(".question-section").hide();
+		$("#newQuestion-"+$(this).attr("id")).show();	
+	})
+})
+</script>
