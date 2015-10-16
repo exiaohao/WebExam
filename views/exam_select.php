@@ -49,36 +49,32 @@
             <p>您可以选择右侧的考试/调查列表直接进入</p>
           </div>
           <div class="row">
-            <div class="col-xs-6 col-lg-4">
-              <h2>Heading</h2>
-              <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-              <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
-            </div><!--/.col-xs-6.col-lg-4-->
-            <div class="col-xs-6 col-lg-4">
-              <h2>Heading</h2>
-              <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-              <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
-            </div><!--/.col-xs-6.col-lg-4-->
-            <div class="col-xs-6 col-lg-4">
-              <h2>Heading</h2>
-              <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-              <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
-            </div><!--/.col-xs-6.col-lg-4-->
-            <div class="col-xs-6 col-lg-4">
-              <h2>Heading</h2>
-              <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-              <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
-            </div><!--/.col-xs-6.col-lg-4-->
-            <div class="col-xs-6 col-lg-4">
-              <h2>Heading</h2>
-              <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-              <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
-            </div><!--/.col-xs-6.col-lg-4-->
-            <div class="col-xs-6 col-lg-4">
-              <h2>Heading</h2>
-              <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-              <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
-            </div><!--/.col-xs-6.col-lg-4-->
+			<?php
+			$exam = $this->db->query("SELECT * FROM `exam`");
+			while($ex_item = mysqli_fetch_array($exam))
+			{
+				echo '<div class="col-xs-6 col-lg-4">
+              <h2>'.$ex_item['title'].'</h2>
+              <p>'.$ex_item['descr'].'</p>
+			  <p>从'.date("Y/m/d H:i", $ex_item['time_start']).' 到'.date("Y/m/d H:i", $ex_item['time_expired']).' </p>';
+				if(time() > $ex_item['time_start'] && time() < $ex_item['time_expired'])
+				{
+              		echo '<p><a class="btn btn-success" href="/testroom/'.$ex_item['type'].'/'.$ex_item['id'].'" role="button">进入'.($ex_item['type']=="exam"?" 考试":"调查").' »</a></p>';
+				}
+				else
+				{
+					if(time() < $ex_item['time_start'])
+					{
+						echo '<p><a class="btn btn-default" href="javascript:;" role="button">尚未开始</a></p>';
+					}
+					if(time() > $ex_item['time_expired'])
+					{
+						echo '<p><a class="btn btn-default" href="javascript:;" role="button">已经结束</a></p>';
+					}
+				}
+            	echo'</div>';
+			}
+			?>
           </div><!--/row-->
         </div><!--/.col-xs-12.col-sm-9-->
 
