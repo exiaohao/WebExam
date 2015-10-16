@@ -67,24 +67,64 @@ class manage extends core
 	{
 		$req_uri = explode('/', $_SERVER['REQUEST_URI']);
 		$examid = $req_uri[3]+0;
-		if($examid > 0) {}
+		if($examid > 0)
+		{
+			$title = $_POST['question'];
+			
+			$question['q'] = $_POST['sel-option'];
+			if(!empty($_POST['correct']))
+			{
+				$question['a'] = $_POST['correct'];
+			}
+			else
+			{
+				die("No Correct Answer!");
+			}
+			$question = json_encode($question);
+		}
 		else	die("Bad Exam Info");
-		echo '!DOCTYPE html>
-<html lang="zh-CN">
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>控制台</title>
-    <link href="/css/bootstrap.min.css" rel="stylesheet">
-	<link href="/css/manage_dashboard.css" rel="stylesheet"></head><body><pre>';
-		print_r($_POST);
+		//print_r($_POST);
 		switch($_POST['qtype'])
 		{
 			case "ss":
 			{
-				echo $sql = "INSERT INTO `exam_question`(`examid`, `title`, `question`, `type`) VALUES ('{$examid}', '{}', 'select',)";
+				$sql = "INSERT INTO `exam_question`(`examid`, `title`, `question`, `type`) VALUES ('{$examid}', '{$title}', '{$question}', 'select');";
 				break;
+			}
+			case "ms":
+			{
+				$sql = "INSERT INTO `exam_question`(`examid`, `title`, `question`, `type`) VALUES ('{$examid}', '{$title}', '{$question}', 'multiselect');";
+				break;
+			}
+			case "yn":
+			{
+				$sql = "INSERT INTO `exam_question`(`examid`, `title`, `question`, `type`) VALUES ('{$examid}', '{$title}', '{$question}', 'check');";
+				break;
+			}
+			case "blank":
+			{
+				$sql = "INSERT INTO `exam_question`(`examid`, `title`, `question`, `type`) VALUES ('{$examid}', '{$title}', '{$question}', 'blank');";
+				break;
+			}
+			default:
+			{
+				header("Content-type: text/html; charset=utf-8");   
+				echo "<pre>";
+				print_r($_POST);
+				die("Bad Request!");
+			}
+		}
+		//SQL Esxists
+		if(!empty($sql))
+		{	
+			$act = $this->db->query($sql);
+			if($act)
+			{
+				header("Location:/manage/question/{$examid}/success/添加试题成功");
+			}
+			else
+			{
+				header("Location:/manage/question/{$examid}/fail/添加试题成功");
 			}
 		}
 	}
