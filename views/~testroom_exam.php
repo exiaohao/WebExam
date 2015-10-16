@@ -8,6 +8,7 @@
     <title>选择考试</title>
     <link href="/css/bootstrap.min.css" rel="stylesheet">
 	<link href="/css/exam_select.css" rel="stylesheet">
+	<link href="/css/exam_structure.css" rel="stylesheet">
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
       <script src="/js/html5shiv.min.js"></script>
@@ -49,16 +50,48 @@
         	<div class="jumbotron">
             	<h2><?=$ex_info['title']; ?></h2>
             	<p><?=$ex_info['descr']; ?></p>
-				<pre>
-				<?=print_r($ex_info);?>
-				</pre>
 			</div>
 			<div class="row">
-				<div class="col-lg-12">
-					Col-lg-12	
-				</div>
+				<?php
+				$strc_kv = array("singleselect"=>"select", "multiselect"=>"multiselect", "yorn"=>"check", "blank"=>"blank");
+				$strc_inputtype = array("singleselect"=>"<label><input name=\"singleselect[%s][]\" value=\"%s\" type=\"radio\">&nbsp;%s</label>", "multiselect"=>"multiselect", "yorn"=>"check", "blank"=>"");
+				$ex_strc = json_decode($ex_info['structure']);
+				foreach($ex_strc as $node=>$n_num)
+				{
+					if($n_num > 0)
+					{
+						$sql = "SELECT * FROM `exam_question` WHERE `examid` = {$examid} AND `type` LIKE '{$strc_kv[$node]}' order by rand() LIMIT {$n_num};";
+						$exdata = $this->db->query($sql);
+						$count = 1;
+						while($exitem = mysqli_fetch_array($exdata))
+						{
+							echo "
+			<div class=\"col-lg-12 question\">
+				<h4>{$count}.{$exitem['title']}</h4>
+				<ul class=\"list-group\">";
+				$exam = json_decode($exitem['question']);
+				foreach($exam->q as $qnode=>$nodestr)
+				{
+					echo "<li class=\"list-group-item\">".sprintf($strc_inputtype[$node], $count, $qnode, preg_replace("#\\\u([0-9a-f]{4})#ie", "iconv('UCS-2BE', 'UTF-8', pack('H4', '\\1'))", $nodestr) )."</li>";
+				}
+				echo "</ul>
+			</div>
+							";
+							$count++;
+						}
+					}
+				}
+				?>
 			</div>
 		</div>
+		 <div class="col-xs-6 col-sm-3 sidebar-offcanvas" id="sidebar">
+          <div class="list-group">
+            <a class="list-group-item active">考试中</a>
+            <a id="clock1" class="list-group-item">剩余时间</a>
+            <a class="list-group-item">已完成</a>
+			<a href="javascript:;" class="list-group-item btn-success">提交答卷</a>
+          </div>
+        </div><!--/.sidebar-offcanvas-->
 	</div>
 	<hr>
 
@@ -72,3 +105,11 @@
 
 <script src="/js/jquery-1.10.2.min.js"></script>
 <script src="/js/bootstrap.min.js"></script>
+<script src="/js/jquery.countdown.js"></script>
+<script>
+var countdown = new Date()
+countdown.setSeconds(countdown.getSeconds() + <?=$ex_info['time']*60; ?>)
+$('#clock1').countdown(countdown, function(event) {
+	$(this).html(event.strftime('距自动收卷 <span class="pull-right">%H:%M:%S</span>'));
+})
+</script>
