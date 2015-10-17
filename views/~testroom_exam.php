@@ -54,7 +54,7 @@
 			<div class="row">
 				<?php
 				$strc_kv = array("singleselect"=>"select", "multiselect"=>"multiselect", "yorn"=>"check", "blank"=>"blank");
-				$strc_inputtype = array("singleselect"=>"<label><input name=\"singleselect[%s][]\" value=\"%s\" type=\"radio\">&nbsp;%s</label>", "multiselect"=>"multiselect", "yorn"=>"check", "blank"=>"");
+				$strc_inputtype = array("singleselect"=>"<label><input name=\"singleselect[%s][]\" value=\"%s\" type=\"radio\">&nbsp;%s</label>", "multiselect"=>"<label><input name=\"multiselect[%s][]\" value=\"%s\" type=\"checkbox\">&nbsp;%s</label>", "yorn"=>"<label><input name=\"check[%s][]\" value=\"%s\" type=\"radio\">&nbsp;%s</label>", "blank"=>"");
 				$ex_strc = json_decode($ex_info['structure']);
 				foreach($ex_strc as $node=>$n_num)
 				{
@@ -72,7 +72,7 @@
 				$exam = json_decode($exitem['question']);
 				foreach($exam->q as $qnode=>$nodestr)
 				{
-					echo "<li class=\"list-group-item\">".sprintf($strc_inputtype[$node], $count, $qnode, preg_replace("#\\\u([0-9a-f]{4})#ie", "iconv('UCS-2BE', 'UTF-8', pack('H4', '\\1'))", $nodestr) )."</li>";
+					echo "<li class=\"list-group-item\">".sprintf($strc_inputtype[$node], $count, $qnode, urldecode($nodestr) )."</li>";
 				}
 				echo "</ul>
 			</div>

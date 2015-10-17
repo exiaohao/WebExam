@@ -70,7 +70,12 @@ class manage extends core
 		if($examid > 0)
 		{
 			$title = $_POST['question'];
-			
+			//
+			foreach($_POST['sel-option'] as $sokey=>$soval)
+			{
+				$_POST['sel-option'][$sokey] = urlencode($soval);
+			}
+			//	
 			$question['q'] = $_POST['sel-option'];
 			if(!empty($_POST['correct']))
 			{
