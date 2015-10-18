@@ -33,7 +33,7 @@
         			<li><a href="/exam/myscore">我的成绩</a></li>
 				</ul>
 				<ul class="nav navbar-nav navbar-right">
-					<li><a href="javascript:;"><? ?></a></li>
+					<li><a href="javascript:;"><?=$_SESSION['user'][1]; ?></a></li>
             		<li><a href="/logout">退出</a></li>
           		</ul>
 			</div>
@@ -52,10 +52,13 @@
 			</div>
 			<div class="row">
 				<form class="examform" action="/submit/exam/<?=$examid;?>" method="post">
+				<input type="hidden" name="time_start" value="<?=time(); ?>" >
 				<?php
-				$strc_kv = array("singleselect"=>"select", "multiselect"=>"multiselect", "yorn"=>"check", "blank"=>"blank");
-				$strc_inputtype = array("singleselect"=>"<label><input name=\"singleselect[%s][]\" value=\"%s\" type=\"radio\">&nbsp;%s</label>", "multiselect"=>"<label><input name=\"multiselect[%s][]\" value=\"%s\" type=\"checkbox\">&nbsp;%s</label>", "yorn"=>"<label><input name=\"check[%s][]\" value=\"%s\" type=\"radio\">&nbsp;%s</label>", "survey_singleselect"=>"<label><input name=\"singleselect[%s][]\" value=\"%s\" type=\"radio\">&nbsp;%s</label>", "multiselect"=>"<label><input name=\"multiselect[%s][]\" value=\"%s\" type=\"checkbox\">&nbsp;%s</label>");
+				$strc_kv = array("singleselect"=>"select", "multiselect"=>"multiselect", "yorn"=>"check", "blank"=>"blank","surveyselect"=>"surveyselect");
+				$strc_inputtype = array("singleselect"=>"<label><input class=\"singleselect\" name=\"singleselect[%s][]\" value=\"%s\" type=\"radio\">&nbsp;%s</label>", "multiselect"=>"<label><input class=\"multiselect\" name=\"multiselect[%s][]\" value=\"%s\" type=\"checkbox\">&nbsp;%s</label>", "yorn"=>"<label><input class=\"check\" name=\"check[%s][]\" value=\"%s\" type=\"radio\">&nbsp;%s</label>", "survey_singleselect"=>"<label><input name=\"singleselect[%s][]\" value=\"%s\" type=\"radio\">&nbsp;%s</label>", "surveyselect"=>"<label><input name=\"surveyselect[%s][]\" value=\"%s\" type=\"radio\">&nbsp;%s</label>");
 				$ex_strc = json_decode($ex_info['structure']);
+				//Total Count
+				$total = 0;
 				foreach($ex_strc as $node=>$n_num)
 				{
 					if($n_num > 0)
@@ -72,12 +75,13 @@
 				$exam = json_decode($exitem['question']);
 				foreach($exam->q as $qnode=>$nodestr)
 				{
-					echo "<li class=\"list-group-item\">".sprintf($strc_inputtype[$node], $count, $qnode, urldecode($nodestr) )."</li>";
+					echo "<li class=\"list-group-item\">".sprintf($strc_inputtype[$node], $exitem['id'], $qnode, urldecode($nodestr) )."</li>";
 				}
 				echo "</ul>
 			</div>
 							";
 							$count++;
+							$total++;
 						}
 					}
 				}
@@ -86,12 +90,15 @@
 				</form>
 			</div>
 		</div>
-		 <div class="col-xs-6 col-sm-3 sidebar-offcanvas" id="sidebar">
+		 <div class="col-xs-3" id="sidebar">
           <div class="list-group">
             <a class="list-group-item active">考试中</a>
             <a id="clock1" class="list-group-item">剩余时间</a>
-            <a class="list-group-item">已完成</a>
-			<a id="validateBtn" href="javascript:;" class="list-group-item btn-success">提交答卷</a>
+            <a class="list-group-item">已完成
+				<div class="progress">
+					<div id="answer-progress" class="progress-bar" role="progressbar" aria-valuenow="1" aria-valuemin="0" aria-valuemax="49" style="width: 0%;"></div>
+				</div>
+			</a>
           </div>
         </div><!--/.sidebar-offcanvas-->
 	</div>
@@ -117,7 +124,34 @@ $(function(){
 		$(this).html(event.strftime('距自动收卷 <span class="pull-right">%H:%M:%S</span>'));
 	});
 	//
-	var finishedItem = 0;
-		
+	$(".examform input").click(function(){
+		var finishedItem = 0;
+		$(".singleselect:checked").each(function(i,e){
+			//console.log(i + "." + $(this).attr("name"))
+			finishedItem = finishedItem + 1;
+		})
+		var last_id = null;
+		$(".multiselect:checked").each(function(i,e){
+			if(last_id == $(this).attr("name"))
+			{
+				last_id = $(this).attr("name");
+			}
+			else
+			{
+				finishedItem = finishedItem + 1;
+				last_id = $(this).attr("name");
+			}
+        })
+		$(".check:checked").each(function(i,e){
+            //console.log(i + "." + $(this).attr("name"))
+            finishedItem = finishedItem + 1;
+        })
+	 	$(".surveyselect:checked").each(function(i,e){
+            //console.log(i + "." + $(this).attr("name"))
+            finishedItem = finishedItem + 1;
+        })
+		var totalQes = <?=$total; ?>;
+		$("#answer-progress").css({"width":(finishedItem/totalQes*100)+"%"}).html(finishedItem+"/"+totalQes);
+	})
 })
 </script>

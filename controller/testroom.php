@@ -1,4 +1,5 @@
 <?php
+session_start();
 class testroom extends core
 {
 	//显示考试内容
