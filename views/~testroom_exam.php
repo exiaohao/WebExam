@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
@@ -52,9 +51,10 @@
             	<p><?=$ex_info['descr']; ?></p>
 			</div>
 			<div class="row">
+				<form class="examform" action="/submit/exam/<?=$examid;?>" method="post">
 				<?php
 				$strc_kv = array("singleselect"=>"select", "multiselect"=>"multiselect", "yorn"=>"check", "blank"=>"blank");
-				$strc_inputtype = array("singleselect"=>"<label><input name=\"singleselect[%s][]\" value=\"%s\" type=\"radio\">&nbsp;%s</label>", "multiselect"=>"<label><input name=\"multiselect[%s][]\" value=\"%s\" type=\"checkbox\">&nbsp;%s</label>", "yorn"=>"<label><input name=\"check[%s][]\" value=\"%s\" type=\"radio\">&nbsp;%s</label>", "blank"=>"");
+				$strc_inputtype = array("singleselect"=>"<label><input name=\"singleselect[%s][]\" value=\"%s\" type=\"radio\">&nbsp;%s</label>", "multiselect"=>"<label><input name=\"multiselect[%s][]\" value=\"%s\" type=\"checkbox\">&nbsp;%s</label>", "yorn"=>"<label><input name=\"check[%s][]\" value=\"%s\" type=\"radio\">&nbsp;%s</label>", "survey_singleselect"=>"<label><input name=\"singleselect[%s][]\" value=\"%s\" type=\"radio\">&nbsp;%s</label>", "multiselect"=>"<label><input name=\"multiselect[%s][]\" value=\"%s\" type=\"checkbox\">&nbsp;%s</label>");
 				$ex_strc = json_decode($ex_info['structure']);
 				foreach($ex_strc as $node=>$n_num)
 				{
@@ -82,6 +82,8 @@
 					}
 				}
 				?>
+				<button type="submit" class="btn btn-primary" name="signup" value="Sign up">提交答卷</button>
+				</form>
 			</div>
 		</div>
 		 <div class="col-xs-6 col-sm-3 sidebar-offcanvas" id="sidebar">
@@ -89,7 +91,7 @@
             <a class="list-group-item active">考试中</a>
             <a id="clock1" class="list-group-item">剩余时间</a>
             <a class="list-group-item">已完成</a>
-			<a href="javascript:;" class="list-group-item btn-success">提交答卷</a>
+			<a id="validateBtn" href="javascript:;" class="list-group-item btn-success">提交答卷</a>
           </div>
         </div><!--/.sidebar-offcanvas-->
 	</div>
@@ -107,9 +109,15 @@
 <script src="/js/bootstrap.min.js"></script>
 <script src="/js/jquery.countdown.js"></script>
 <script>
-var countdown = new Date()
-countdown.setSeconds(countdown.getSeconds() + <?=$ex_info['time']*60; ?>)
-$('#clock1').countdown(countdown, function(event) {
-	$(this).html(event.strftime('距自动收卷 <span class="pull-right">%H:%M:%S</span>'));
+$(function(){
+	//Exam Countdown
+	var countdown = new Date()
+	countdown.setSeconds(countdown.getSeconds() + <?=$ex_info['time']*60; ?>)
+	$('#clock1').countdown(countdown, function(event) {
+		$(this).html(event.strftime('距自动收卷 <span class="pull-right">%H:%M:%S</span>'));
+	});
+	//
+	var finishedItem = 0;
+		
 })
 </script>
