@@ -10,6 +10,7 @@ class home extends core
 	function _default()
 	{
 		//var_dump("I/m Default page");
+		require 'views/welcome.html';
 	}
 	function myact()
 	{

@@ -77,7 +77,7 @@
 			?>
           </div><!--/row-->
         </div><!--/.col-xs-12.col-sm-9-->
-
+		<!--
         <div class="col-xs-6 col-sm-3 sidebar-offcanvas" id="sidebar">
           <div class="list-group">
             <a href="#" class="list-group-item active">Link</a>
@@ -91,13 +91,14 @@
             <a href="#" class="list-group-item">Link</a>
             <a href="#" class="list-group-item">Link</a>
           </div>
-        </div><!--/.sidebar-offcanvas-->
-      </div><!--/row-->
-
+        </div>
+      </div>
+		-->
+		</div>
       <hr>
 
       <footer>
-        <p>&copy; Company 2014</p>
+        <p>&copy; ETNWS EasyTest</p>
       </footer>
 
     </div><!--/.container-->

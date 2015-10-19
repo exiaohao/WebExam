@@ -5,6 +5,7 @@ class testroom extends core
 	//显示考试内容
 	function exam()
 	{
+		if(!$_SESSION['valid'])	header("Location:/login");
 		$req_uri = explode('/', $_SERVER['REQUEST_URI']);
 		$examid = is_numeric($req_uri[3])?$req_uri[3]:-1;
 		if($examid > 0)

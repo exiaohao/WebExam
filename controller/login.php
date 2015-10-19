@@ -47,9 +47,9 @@ class login extends core
 			<![endif]-->
 			<input name="account" type="text" id="account" class="form-control" placeholder="学号" value="" required autofocus>
 			<!--[if lt IE 9]>
-            <label for="inputPassword">密码</label>
+            <label for="inputPassword">密码(身份证最后六位)</label>
             <![endif]-->
-			<input name="password" type="password" id="inputPassword" class="form-control" placeholder="密码" required>
+			<input name="password" type="password" id="inputPassword" class="form-control" placeholder="密码(身份证最后六位)" required>
 			<input name="checkcode" type="hidden" value="<?=$_SESSION['utkn']; ?>">
 			<button class="btn btn-lg btn-primary btn-block" type="submit">登录</button>
 			<p>ETNWS WebExam</p>

@@ -12,5 +12,9 @@ class exam extends core
 	{
 		require 'views/exam_select.php';
 	}
+	function myscore()
+	{
+		die("");
+	}
 }
 ?>
