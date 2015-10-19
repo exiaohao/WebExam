@@ -105,7 +105,7 @@
 	<hr>
 
       <footer>
-        <p>&copy; Company 2014</p>
+        <p>&copy; ETNWS WebExam</p>
       </footer>
 
     </div><!--/.container-->

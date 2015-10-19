@@ -98,7 +98,7 @@
       <hr>
 
       <footer>
-        <p>&copy; ETNWS EasyTest</p>
+        <p>&copy; ETNWS WebExam</p>
       </footer>
 
     </div><!--/.container-->
