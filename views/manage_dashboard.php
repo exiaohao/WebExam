@@ -1,3 +1,10 @@
+<?php
+if($_SESSION['manage_valid'] != 1)
+{
+	header("Location:/manage/login");
+	die();
+}
+?>
 <!DOCTYPE html>
 <html lang="zh-CN">
   <head>

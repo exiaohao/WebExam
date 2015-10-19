@@ -27,8 +27,14 @@ if($req_uri[3] == "msg" && !empty($req_uri[4]))
 		{
 			$time_start = date("Y/m/d H:i:s", $item['time_start']);
 			$time_expired = date("Y/m/d H:i:s", $item['time_expired']);
-			$answered = 0;
-			echo "<tr><td>{$count}</td><td>{$item['type']}</td><td>{$item['title']}</td><td>{$time_start}</td><td>{$time_expired}</td><td>{$answered}</td><td><a href=\"\">修改</a>&nbsp;<a href=\"/manage/question/{$item['id']}\">试题</a></td></tr>";
+			$answered = $this->db->query("SELECT * FROM `answer_result` WHERE `testid` = {$item['id']};");
+			echo "<tr><td>{$count}</td>
+				<td>{$item['type']}</td>
+				<td>{$item['title']}</td>
+				<td>{$time_start}</td>
+				<td>{$time_expired}</td>
+				<td>{$answered->num_rows}&nbsp;<a href=\"/manage/result/{$item['id']}\">答题结果</a></td>
+				<td><a href=\"\">修改</a>&nbsp;<a href=\"/manage/question/{$item['id']}\">添加试题</a>&nbsp;<a href=\"/manage/qlist/{$item['id']}\">试题列表</a></td></tr>";
 			$count++;
 		}
 		?>

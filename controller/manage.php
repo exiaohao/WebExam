@@ -1,7 +1,9 @@
 <?php
 session_start();
+
 header("cache-control:private, max-age=0");
 header("x-frame-options:SAMEORIGIN");
+
 class manage extends core
 {
 	function login()
@@ -132,6 +134,74 @@ class manage extends core
 				header("Location:/manage/question/{$examid}/fail/添加试题成功");
 			}
 		}
+	}
+	/*
+	Get qlist
+	*/
+	function qlist()
+	{
+		
+	}
+	function result()
+	{
+		$req_uri = explode('/', $_SERVER['REQUEST_URI']);
+		require 'views/manage_dashboard.php';
+	}
+	function getAnsweredDat()
+	{
+		$school = $_POST['school'];
+		$class = $_POST['cls'];
+		$qid = $_POST['qid'];
+		
+		if($school == "null")
+		{
+			$sql = "SELECT * FROM `answer_result` WHERE `testid` = {$qid} ORDER by `timeend` DESC;";
+		}
+		elseif($school != "null" && $class == "null")
+		{
+			$sql = "SELECT * FROM `answer_result` WHERE `testid` = {$qid} AND `school` LIKE '{$school}' ORDER by `timeend` DESC;";
+		}
+		elseif($school != "null" && $class != "null")
+        {
+            $sql = "SELECT * FROM `answer_result` WHERE `testid` = {$qid} AND `class` LIKE '{$class}' ORDER by `timeend` DESC;";
+        }
+
+		$list = $this->db->query($sql);
+		$return = array();
+		$cpy_item = array("name", "class", "school", "score", "timestart", "timeend");
+		$i = 0;
+		while($item = mysqli_fetch_array($list))
+		{
+			foreach($cpy_item as $cpitem)
+			{
+				$return[$i][$cpitem] = $item[$cpitem];
+			}
+			$survinfo = json_decode($item['surveyinfo']);
+			foreach($survinfo as $svyi)
+			{
+				if(!empty($svyi->answer))	$return[$i]['surveyinfo'] = urldecode($svyi->answer);
+			}
+			$return[$i]['submittime'] = date("Y/m/d H:i:s", $item['timeend']);
+			$i++;
+		}
+		echo json_encode($return);
+	}
+	
+	function getAnseredClass()
+	{
+		$school = $_POST['school'];
+		$qid = $_POST['qid'];
+		$school_class = $this->db->query("SELECT COUNT(*) AS `lines`, `class` FROM `answer_result` WHERE `school` LIKE '{$school}' GROUP BY `class` ORDER BY `class`;");
+		
+		$count = 0;
+		$class = array();
+		while($item = mysqli_fetch_array($school_class))
+		{
+			$class[$count]['name'] = $item['class'];
+			$class[$count]['lines'] = $item['lines'];
+			$count ++;
+		}
+		echo json_encode($class);
 	}
 }
 ?>
