@@ -94,7 +94,14 @@ class core extends mysql
 		$i=0;
 		for( $c = 1; $c < count($elements); $c++ )
 		{
-		    $udata[$i++]=trim(iconv("GB2312","UTF-8//TRANSLIT",$elements[$c]));
+			if($i == 1)
+			{
+				$udata[$i++]=trim(mb_convert_encoding($elements[$c], 'UTF-8', 'gbk'));
+			}
+			else
+			{
+		    	$udata[$i++]=trim(iconv("GB2312","UTF-8//TRANSLIT",$elements[$c]));
+			}
 	    	$c++;
 		}
 		return $udata;

@@ -32,12 +32,23 @@ class submit extends core{
 	}
 	.ircorrect{
 		margin-top: 230px;
+		display:none
 	}
 	</style>
 </head>
 <div class="container">
 <div class="row ircorrect">
 ';
+		//Check Session Valid
+		if($_SESSION['user'][0] > 0 || (time() - $_POST['time_start'])> 1805)
+		{
+		}
+		else
+		{
+			$this->sys_log("INFO", "SAVE_EXAM_SESSIONTIMEOUT", "");
+			die("<div class=\"alert alert-danger\" role=\"alert\">你的登录已经过期，或是答题超时!</div>");
+				
+		}
 		//Check if Answered
 		$answer_rec = $this->db->query("SELECT * FROM `answer_result` WHERE `testid` = {$req_uri[3]} AND `sid` LIKE '{$_SESSION['user'][0]}'");
 		if($answer_rec->num_rows > 0)
@@ -73,26 +84,26 @@ class submit extends core{
 						if( !is_array($answer->a))
 						{
 							$correct_selection = $answer->a;
-							echo "{$correct_selection}. ".urldecode($answer->q->$correct_selection);
+							//echo "{$correct_selection}. ".urldecode($answer->q->$correct_selection);
 						}
 						else
 						{
 							foreach($answer->a as $correct_selection)
 							{
-								echo "{$correct_selection}. ".urldecode($answer->q->$correct_selection)."<br />";
+								//echo "{$correct_selection}. ".urldecode($answer->q->$correct_selection)."<br />";
 							}
 						}
 						echo "</div><p>你的答案是</p><div class=\"alert alert-danger\" role=\"alert\">";
 						//print_r($exNodeAnswer);
 						if( !is_array($exNodeAnswer))
                         {
-                            echo "{$exNodeAnswer}. ".urldecode($answer->q->$exNodeAnswer);
+                            //echo "{$exNodeAnswer}. ".urldecode($answer->q->$exNodeAnswer);
                         }
                         else
                         {
                             foreach($exNodeAnswer as $correct_selection)
                             {
-                                echo "{$correct_selection}. ".urldecode($answer->q->$correct_selection)."<br />";
+                                //echo "{$correct_selection}. ".urldecode($answer->q->$correct_selection)."<br />";
                             }
                         }
 
@@ -126,6 +137,7 @@ class submit extends core{
 		//echo "<pre><p>Debug Info</p>";
 		
 		$answer_rawinfo = json_encode($_POST);
+		if($answer_rawinfo == "[]")	die("答题内容不能为空!");
 		//GetSurveyInfo
 		$survArr = array();
 		$survCount = 0;

@@ -168,7 +168,7 @@ class manage extends core
 
 		$list = $this->db->query($sql);
 		$return = array();
-		$cpy_item = array("name", "class", "school", "score", "timestart", "timeend");
+		$cpy_item = array("sid", "name", "class", "school", "score", "timestart", "timeend");
 		$i = 0;
 		while($item = mysqli_fetch_array($list))
 		{
