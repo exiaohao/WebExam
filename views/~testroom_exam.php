@@ -55,7 +55,7 @@
 				<input type="hidden" name="time_start" value="<?=time(); ?>" >
 				<?php
 				$strc_kv = array("singleselect"=>"select", "multiselect"=>"multiselect", "yorn"=>"check", "blank"=>"blank","surveyselect"=>"surveyselect");
-				$strc_inputtype = array("singleselect"=>"<label><input class=\"singleselect\" name=\"singleselect[%s][]\" value=\"%s\" type=\"radio\">&nbsp;%s</label>", "multiselect"=>"<label><input class=\"multiselect\" name=\"multiselect[%s][]\" value=\"%s\" type=\"checkbox\">&nbsp;%s</label>", "yorn"=>"<label><input class=\"check\" name=\"check[%s][]\" value=\"%s\" type=\"radio\">&nbsp;%s</label>", "survey_singleselect"=>"<label><input name=\"singleselect[%s][]\" value=\"%s\" type=\"radio\">&nbsp;%s</label>", "surveyselect"=>"<label><input name=\"surveyselect[%s][]\" value=\"%s\" type=\"radio\">&nbsp;%s</label>");
+				$strc_inputtype = array("singleselect"=>"<label><input class=\"singleselect\" name=\"singleselect[%s][]\" value=\"%s\" type=\"radio\">&nbsp;%s</label>", "multiselect"=>"<label><input class=\"multiselect\" name=\"multiselect[%s][]\" value=\"%s\" type=\"checkbox\">&nbsp;%s</label>", "yorn"=>"<label><input class=\"check\" name=\"check[%s][]\" value=\"%s\" type=\"radio\">&nbsp;%s</label>", "survey_singleselect"=>"<label><input name=\"singleselect[%s][]\" value=\"%s\" type=\"radio\">&nbsp;%s</label>", "surveyselect"=>"<label><input class=\"surveyselect\" name=\"surveyselect[%s][]\" value=\"%s\" type=\"radio\">&nbsp;%s</label>");
 				$ex_strc = json_decode($ex_info['structure']);
 				//Total Count
 				$total = 0;
@@ -86,7 +86,7 @@
 					}
 				}
 				?>
-				<button type="submit" class="btn btn-primary" name="signup" value="Sign up">提交答卷</button>
+				<button id="submitpaper" type="submit" class="btn btn-primary" name="signup" value="Sign up" disabled="disabled">您还有未回答的问题，不能交卷</button>
 				</form>
 			</div>
 		</div>
@@ -122,6 +122,10 @@ $(function(){
 	countdown.setSeconds(countdown.getSeconds() + <?=$ex_info['time']*60; ?>)
 	$('#clock1').countdown(countdown, function(event) {
 		$(this).html(event.strftime('距自动收卷 <span class="pull-right">%H:%M:%S</span>'));
+	}).on('finish.countdown', function(){
+		$("#submitpaper").removeAttr("disabled").html("系 统 自 动 交 卷");
+		alert("时间到了，系统将自动收卷!");
+		$("#submitpaper").trigger("click");
 	});
 	//
 	$(".examform input").click(function(){
@@ -151,6 +155,10 @@ $(function(){
             finishedItem = finishedItem + 1;
         })
 		var totalQes = <?=$total; ?>;
+		if(finishedItem >= totalQes)
+		{
+			$("#submitpaper").removeAttr("disabled").html("提 交 问 卷");
+		}
 		$("#answer-progress").css({"width":(finishedItem/totalQes*100)+"%"}).html(finishedItem+"/"+totalQes);
 	})
 })
