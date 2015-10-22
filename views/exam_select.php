@@ -55,23 +55,20 @@
 			{
 				echo '<div class="col-xs-6 col-lg-4">
               <h2>'.$ex_item['title'].'</h2>
-              <p>'.$ex_item['descr'].'</p>
-			  <p>从'.date("Y/m/d H:i", $ex_item['time_start']).' 到'.date("Y/m/d H:i", $ex_item['time_expired']).' </p>';
-				if(time() > $ex_item['time_start'] && time() < $ex_item['time_expired'])
+              <p>'.$ex_item['descr'].'</p>';
+			  //echo '<p>从'.date("Y/m/d H:i", $ex_item['time_start']).' 到'.date("Y/m/d H:i", $ex_item['time_expired']).' </p>';
+				
+				if($this->checkTestTime() == 1)
 				{
               		echo '<p><a class="btn btn-success" href="/testroom/'.$ex_item['type'].'/'.$ex_item['id'].'" role="button">进入'.($ex_item['type']=="exam"?" 考试":"调查").' »</a></p>';
 				}
 				else
 				{
-					if(time() < $ex_item['time_start'])
-					{
-						echo '<p><a class="btn btn-default" href="javascript:;" role="button">尚未开始</a></p>';
-					}
-					if(time() > $ex_item['time_expired'])
-					{
-						echo '<p><a class="btn btn-default" href="javascript:;" role="button">已经结束</a></p>';
-					}
+					$next_time = $this->checkTestTime();
+					echo '<p><a class="btn btn-default" href="javascript:;" role="button">已经结束</a></p>';
+					echo '<p>下一次考试<br />从'.date("Y/m/d H:i", $next_time[0]).' 到'.date("Y/m/d H:i", $next_time[1]).' </p>';
 				}
+				
             	echo'</div>';
 			}
 			?>

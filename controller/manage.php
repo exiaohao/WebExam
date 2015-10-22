@@ -184,6 +184,7 @@ class manage extends core
 			$return[$i]['submittime'] = date("Y/m/d H:i:s", $item['timeend']);
 			$i++;
 		}
+		header('content-type:application/json;charset=utf8');
 		echo json_encode($return);
 	}
 	
@@ -202,6 +203,69 @@ class manage extends core
 			$count ++;
 		}
 		echo json_encode($class);
+	}
+	function analyse()
+	{
+		$req_uri = explode('/', $_SERVER['REQUEST_URI']);
+        require 'views/manage_dashboard.php';
+	}
+	function getAnalyseDat()
+	{
+		$examid = $_POST['qid'] + 0;
+		$cls = $_POST['cls'];
+		//--------
+		$return['max'] = 0;
+		$return['min'] = 101;
+		$rerurn['avg'] = 0;
+		$return['passed'] = 0;
+		$return['lines'] = 0;
+		$return['reqexam'] = 0;
+		$return['testresult'] = array();
+		$unset_array = array("track", "rawinfo", "client", 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12);
+		//--------
+		$namelist = $this->db->query("SELECT * FROM `student` WHERE `class` LIKE '{$cls}' ORDER BY `student`.`sid` ASC;");
+		while($name = mysqli_fetch_array($namelist))
+		{
+			//echo json_encode($_POST);
+			$return['reqexam'] ++;
+			$sql = "SELECT * FROM `answer_result` WHERE `testid` = {$examid} AND `sid` LIKE '{$name['sid']}';";
+			$dat = $this->db->query($sql);
+			//已考
+			if($dat->num_rows > 0)
+			{
+				while($line = mysqli_fetch_array($dat))
+				{
+					$line['exam_time'] = $line['timeend'] - $line['timestart'];
+					$survinfo = json_decode($line['surveyinfo']);
+					$line['surveyinfo'] = "";
+					$line['submittime'] = date("Y/m/d H:i:s", $line['timeend']);
+					foreach($survinfo as $svynode)
+					{
+						$line['surveyinfo'] .= urldecode($svynode->answer);
+					}
+					foreach($unset_array as $unarr)
+					{
+						unset($line[$unarr]);
+					}
+					$return['testresult'][] = $line;
+					if($line['score'] > $return['max'])		$return['max'] = $line['score'];
+					if($line['score'] < $return['min'])		$return['min'] = $line['score'];
+					if($line['score'] > 59)					$return['passed']++;
+					$return['avg'] += $line['score'];
+					$return['lines'] ++;
+				}
+			}
+			//未考
+			else
+			{
+				$return['nonexamed'][] = $name;
+			}
+		}
+		//$return['sql'] = "SELECT * FROM `student` WHERE `class` LIKE '{$cls}' ORDER BY `student`.`sid` ASC;";
+		//
+		$return['avg'] = number_format($return['avg']/$return['lines'], 2);
+		header('content-type:application/json;charset=utf8');
+		echo json_encode($return);
 	}
 }
 ?>

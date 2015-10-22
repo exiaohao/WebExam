@@ -34,7 +34,7 @@ if($req_uri[3] == "msg" && !empty($req_uri[4]))
 				<td>{$time_start}</td>
 				<td>{$time_expired}</td>
 				<td>{$answered->num_rows}&nbsp;<a href=\"/manage/result/{$item['id']}\">答题结果</a></td>
-				<td><a href=\"\">修改</a>&nbsp;<a href=\"/manage/question/{$item['id']}\">添加试题</a>&nbsp;<a href=\"/manage/qlist/{$item['id']}\">试题列表</a></td></tr>";
+				<td><a href=\"\">修改</a>&nbsp;<a href=\"/manage/question/{$item['id']}\">添加试题</a>&nbsp;<a href=\"/manage/qlist/{$item['id']}\">试题列表</a>&nbsp;<a href=\"/manage/analyse/{$item['id']}\">考试分析</a></td></tr>";
 			$count++;
 		}
 		?>

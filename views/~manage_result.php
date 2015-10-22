@@ -7,7 +7,7 @@
                	<th width=150>
 				<select id="select-school" name="select-school">
 				<?php
-				$getSchool = $this->db->query("SELECT COUNT(*) AS `lines`, `school` FROM `answer_result` GROUP BY `school` ORDER BY `school`;");
+				$getSchool = $this->db->query("SELECT COUNT(*) AS `lines`, `school` FROM `answer_result` WHERE `testid` = {$req_uri[3]} GROUP BY `school` ORDER BY `school`;");
 				$school_total = 0;
 				while($school_item = mysqli_fetch_array($getSchool))
 				{

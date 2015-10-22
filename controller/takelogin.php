@@ -9,8 +9,8 @@ class takelogin extends core
 	}
 	function _default()
 	{
-		print_r($_SESSION);
-		print_r($_POST);
+		//print_r($_SESSION);
+		//print_r($_POST);
 		if($_POST['checkcode'] == $_SESSION['utkn'])
 		{
 			

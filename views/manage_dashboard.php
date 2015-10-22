@@ -48,6 +48,9 @@ if($_SESSION['manage_valid'] != 1)
 				<li><a class="anchorjs-link" href="/manage/new_exam">新建考试</a></li>
                 <li><a href="/manage/new_survey">新建问卷</a></li>
           	</ul>
+			<ul class="nav nav-sidebar">
+                <li><a href="/manage/item">考试分析</a></li>
+            </ul>
         </div>
     	<!--MAIN-->
 		<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
