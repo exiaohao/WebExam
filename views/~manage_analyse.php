@@ -42,7 +42,7 @@
         		<tr>
             	<th width=50>#</th>
                	<th width=150>学院</th>
-               	<th width=100>班级</th>
+               	<th width=150>班级</th>
 				<th width=130>学号</th>
 	            <th width=100>姓名</th>
     	        <th width=100>成绩</th>
